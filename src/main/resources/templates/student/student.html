@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form name="placeOrder" method="POST" action="/stu/updateStu">
+                    <form name="placeOrder" method="POST" action="/stu/updateStudent">
                         <input type="hidden" value="" id="bhId">
                         <div class="form-group">
                             <label for="stuNo">学号</label>
@@ -100,7 +100,20 @@
            $("#stuPhone").val(row.phone);
         },
         "click .delete":function(e,value,row,index) {
-           
+           var stuNo = row.studentNo;
+           var isOK = confirm("您确定要删除吗？");
+           if(isOK){
+               $.ajax({
+                   url:"/stu/deleteStudent/"+stuNo,
+                   type:"DELETE",
+                   success:function (data) {
+                       console.log(data)
+                       alert(data.msg);
+                       //ajax   json数据  重新渲染下页面
+                       window.location.reload();
+                   }
+               })
+           }
 
         }
     }
@@ -145,7 +158,7 @@
                     searchable:true
                 },
                 {
-                    field:"gradeId",
+                    field:"gradeName",
                     title:"年级",
                     align:"center",
                     valign:"middle",
